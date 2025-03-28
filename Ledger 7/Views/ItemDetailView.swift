@@ -62,6 +62,7 @@ struct ItemDetailView: View {
             }
         }
         .navigationBarBackButtonHidden()
+        .frame(height: 250)
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Button {

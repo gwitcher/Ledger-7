@@ -16,7 +16,7 @@ struct AddItemView: View {
         NavigationStack {
             ItemListView()
             ItemDetailView()
-            
+  
             Button {
                 //TODO: add item to item array
             } label: {
@@ -25,6 +25,7 @@ struct AddItemView: View {
             }
             .buttonStyle(.borderedProminent)
         }
+        
     }
 }
 

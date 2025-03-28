@@ -19,13 +19,15 @@ struct ProjectDetailView: View {
     @State private var projectName = ""
     @State private var jobDate = Date.now
     @State private var notes = ""
-    @State private var mediaType = MediaType.film
+    @State private var mediaType = MediaType.lesson
     @State private var invoiced = false
     @State private var paid = false
     @State private var dateDelivered = Date()
     @State private var dateClosed = Date()
     
     @State private var sheetIsPresented = false
+    
+    
     
     
     var body: some View {
@@ -59,7 +61,6 @@ struct ProjectDetailView: View {
                 Picker("Media", selection: $mediaType) {
                     ForEach(MediaType.allCases) {type in
                         Text(type.rawValue)
-                        
                     }
                     
                 }
@@ -93,7 +94,7 @@ struct ProjectDetailView: View {
             
             Section("Notes") {
                 ScrollView {
-                    TextEditor(text: $notes)
+                    TextField("", text: $notes, axis: .vertical)
                 }
             }
             .textFieldStyle(.roundedBorder)
@@ -105,8 +106,9 @@ struct ProjectDetailView: View {
                     } else {
                         HStack{
                             Text("Invoiced")
-                            DatePicker("", selection: $dateDelivered)
+                            DatePicker("", selection: $dateDelivered, displayedComponents: [.date])
                                 .datePickerStyle(.automatic)
+                                .padding(.horizontal)
                         }
                         
                     }
@@ -117,12 +119,25 @@ struct ProjectDetailView: View {
                     } else {
                         HStack{
                             Text("Paid")
-                            DatePicker("", selection: $dateClosed)
+                            DatePicker("", selection: $dateClosed, displayedComponents: [.date])
                                 .datePickerStyle(.automatic)
+                                .padding(.horizontal)
                         }
                     }
                 }
             }
+        }
+        .onAppear {
+            client = project.client
+            artist = project.artist
+            projectName = project.projectName
+            jobDate = project.jobDate
+            notes = project.notes
+            //mediaType = project.mediaType
+            invoiced = project.invoiced
+            paid = project.paid
+            dateDelivered = project.dateDelivered
+            dateClosed = project.dateClosed
         }
         .navigationBarBackButtonHidden()
         .toolbar {
@@ -136,9 +151,25 @@ struct ProjectDetailView: View {
             
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
-                    //TODO: Save project action
+                    project.client = client
+                    project.artist = artist
+                    project.projectName = projectName
+                    project.jobDate = jobDate
+                    project.notes = notes
+                    //project.mediaType = mediaType.rawValue
+                    project.invoiced = invoiced
+                    project.paid = paid
+                    project.dateDelivered = dateDelivered
+                    project.dateClosed = dateClosed
+                    modelContext.insert(Project())
+                    guard let _ = try? modelContext.save() else{
+                        print("😡 ERROR: Cannot save")
+                        return
+                    }
+                    dismiss()
+                    
                 } label: {
-                    Text("Save")
+                    Text("Done")
                 }
 
             }

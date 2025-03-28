@@ -12,6 +12,7 @@ import SwiftData
 struct ProjectLedgerView: View {
     @Environment(\.modelContext) var modelContext
     
+    
     @State var projects = [
         Project(id: UUID(), client: "Jenny", artist: "Block", invoiced: false, paid: false),
         

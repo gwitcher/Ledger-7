@@ -15,12 +15,13 @@ class Project {
     var artist: String
     var projectName: String
     var jobDate: Date
+    var notes: String
     var dateOpened: Date
     var invoiced: Bool
     var dateDelivered: Date
     var paid: Bool
     var dateClosed: Date
-    var mediaType: String
+    //var mediaType: String
     
     
     init(
@@ -29,24 +30,26 @@ class Project {
         artist: String = "",
         projectName: String = "",
         jobDate: Date = Date.now,
+        notes: String = "",
         dateOpened: Date = Date.now,
         invoiced: Bool = false,
         dateDelivered: Date = Date.distantPast,
         paid: Bool = false,
-        dateClosed: Date = Date.distantPast,
-        mediaType: MediaType.RawValue = MediaType.film.rawValue
+        dateClosed: Date = Date.distantPast
+        //mediaType: MediaType.RawValue = MediaType.tv.rawValue
     ) {
         self.id = id
         self.client = client
         self.artist = artist
         self.projectName = projectName
         self.jobDate = jobDate
+        self.notes = notes
         self.dateOpened = dateOpened
         self.invoiced = invoiced
         self.dateDelivered = dateDelivered
         self.paid = paid
         self.dateClosed = dateClosed
-        self.mediaType = mediaType
+        //self.mediaType = mediaType
     }
   
     
