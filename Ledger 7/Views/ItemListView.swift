@@ -37,6 +37,7 @@ struct ItemListView: View {
                                     .lineLimit(1)
                             }
                             
+                            
                             Spacer()
                             
                             VStack(alignment: .trailing) {
@@ -47,6 +48,7 @@ struct ItemListView: View {
                     }
                 }
             }
+            
             .navigationTitle("Items in Project")
             .navigationBarTitleDisplayMode(.inline)
         }

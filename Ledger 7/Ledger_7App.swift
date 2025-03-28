@@ -12,7 +12,7 @@ struct Ledger_7App: App {
     var body: some Scene {
         WindowGroup {
             ProjectLedgerView()
-                .modelContainer(for: Project.self, inMemory: true)
+                .modelContainer(for: Project.self)
         }
     }
     

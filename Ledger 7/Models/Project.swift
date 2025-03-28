@@ -56,13 +56,13 @@ class Project {
     
 }
 
-enum Status: String, CaseIterable, Identifiable {
-    case open = "Open"
-    case invoiced = "Invoiced"
-    case closed = "Closed"
-
-    var id: Self {self}
-}
+//enum Status: String, CaseIterable, Identifiable {
+//    case open = "Open"
+//    case invoiced = "Invoiced"
+//    case closed = "Closed"
+//
+//    var id: Self {self}
+//}
 
 enum MediaType: String, CaseIterable, Identifiable {
     case film = "Film"

@@ -42,12 +42,12 @@ struct ProjectDetailView: View {
                 }
                 
                 LabeledContent {
-                    TextField("", text: $artist)
+                    TextField("", text: $projectName)
                 }   label: {
                     Text("Project").foregroundStyle(.secondary)
                 }
                 LabeledContent {
-                    TextField("", text: $projectName)
+                    TextField("", text: $artist)
                 }   label: {
                     Text("Artist").foregroundStyle(.secondary)
                 }
@@ -161,7 +161,7 @@ struct ProjectDetailView: View {
                     project.paid = paid
                     project.dateDelivered = dateDelivered
                     project.dateClosed = dateClosed
-                    modelContext.insert(Project())
+                    modelContext.insert(project)
                     guard let _ = try? modelContext.save() else{
                         print("😡 ERROR: Cannot save")
                         return
