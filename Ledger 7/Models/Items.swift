@@ -27,6 +27,8 @@ class Item {
         self.fee = fee
     }
     
+    var project: Project?
+    
 }
 
 

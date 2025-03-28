@@ -21,6 +21,8 @@ class Project {
     var dateDelivered: Date
     var paid: Bool
     var dateClosed: Date
+    var items: [Item]?
+    
     //var mediaType: String
     
     
