@@ -11,7 +11,12 @@ import SwiftUI
 struct Ledger_7App: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ProjectLedgerView()
+                .modelContainer(for: Project.self, inMemory: true)
         }
+    }
+    
+    init() {
+        print(URL.applicationSupportDirectory.path(percentEncoded: false))
     }
 }

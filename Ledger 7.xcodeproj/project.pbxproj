@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		663DC9C82D95EF4700C54F2E /* SwiftUIFontIcon in Frameworks */ = {isa = PBXBuildFile; productRef = 663DC9C72D95EF4700C54F2E /* SwiftUIFontIcon */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		663DC9822D95DF5500C54F2E /* Ledger 7.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Ledger 7.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -23,6 +27,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				663DC9C82D95EF4700C54F2E /* SwiftUIFontIcon in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +70,7 @@
 			);
 			name = "Ledger 7";
 			packageProductDependencies = (
+				663DC9C72D95EF4700C54F2E /* SwiftUIFontIcon */,
 			);
 			productName = "Ledger 7";
 			productReference = 663DC9822D95DF5500C54F2E /* Ledger 7.app */;
@@ -94,6 +100,9 @@
 			);
 			mainGroup = 663DC9792D95DF5500C54F2E;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				663DC9C62D95EF4700C54F2E /* XCRemoteSwiftPackageReference "SwiftUIFontIcon" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 663DC9832D95DF5500C54F2E /* Products */;
 			projectDirPath = "";
@@ -324,6 +333,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		663DC9C62D95EF4700C54F2E /* XCRemoteSwiftPackageReference "SwiftUIFontIcon" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/huybuidac/SwiftUIFontIcon";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.1.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		663DC9C72D95EF4700C54F2E /* SwiftUIFontIcon */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 663DC9C62D95EF4700C54F2E /* XCRemoteSwiftPackageReference "SwiftUIFontIcon" */;
+			productName = SwiftUIFontIcon;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 663DC97A2D95DF5500C54F2E /* Project object */;
 }
