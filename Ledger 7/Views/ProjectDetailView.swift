@@ -68,16 +68,25 @@ struct ProjectDetailView: View {
             Section {
                 
                 NavigationLink {
-                    Text("Item View Will Go Here")
+                    ItemListView()
                 } label: {
                         Text("Items")
                 }
                 HStack {
-                    Image(systemName: "plus.circle.fill")
-                    Text("Add Items")
+                    
+                    Button {
+                        sheetIsPresented = true
+                    } label: {
+                        NavigationStack {
+                            HStack{
+                                Image(systemName: "plus.circle.fill")
+                                Text("Add Items")
+                            }
+                        }
+                    }
                 }
                 .sheet(isPresented: $sheetIsPresented) {
-                    //TODO: Item Sheet call
+                    AddItemView()
                 }
             }
             

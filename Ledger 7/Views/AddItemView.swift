@@ -13,10 +13,23 @@ struct AddItemView: View {
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationStack {
+            ItemListView()
+            ItemDetailView()
+            
+            Button {
+                //TODO: add item to item array
+            } label: {
+                Image(systemName: "plus.circle")
+                Text("Add Item")
+            }
+            .buttonStyle(.borderedProminent)
+        }
     }
 }
 
 #Preview {
-    AddItemView()
+    NavigationStack{
+        AddItemView()
+    }
 }

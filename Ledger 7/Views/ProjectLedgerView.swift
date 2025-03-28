@@ -22,32 +22,33 @@ struct ProjectLedgerView: View {
     
     var body: some View {
         
-        NavigationStack {
-            List {
-                ForEach(projects) {project in
-                    NavigationLink(destination: ProjectDetailView(project: project)) {
-                        ProjectEntryView(project: project)
+        VStack{
+            NavigationStack {
+                List {
+                    ForEach(projects) {project in
+                        NavigationLink(destination: ProjectDetailView(project: project)) {
+                            ProjectEntryView(project: project)
+                        }
+                    }
+                }
+                .navigationTitle("Projects")
+                .toolbar {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button {
+                            sheetIsPresented = true
+                        } label: {
+                            Image(systemName: "plus")
+                        }
                     }
                 }
             }
-        }
-        .navigationTitle("Projects")
-        .sheet(isPresented: $sheetIsPresented, content: {
-            NavigationStack{
-                ProjectDetailView(project: Project())
-            }
-        })
-        
-        
-        .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                Button {
-                    sheetIsPresented = true
-                } label: {
-                    Image(systemName: "plus")
+            .sheet(isPresented: $sheetIsPresented, content: {
+                NavigationStack{
+                    ProjectDetailView(project: Project())
                 }
-            }
+            })
         }
+       
     }
 }
 

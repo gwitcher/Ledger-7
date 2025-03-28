@@ -22,31 +22,35 @@ struct ItemListView: View {
         NavigationStack{
             List {
                 ForEach(sampleItems) { item in
-                    HStack{
-                        VStack(alignment: .leading){
-                            Text(item.itemName)
-                                .font(.subheadline)
-                                .bold()
-                                .lineLimit(1)
-                            Text(item.itemType)
-                                .font(.footnote)
-                                .opacity(0.7)
-                                .lineLimit(1)
+                    NavigationLink {
+                        ItemDetailView()
+                    } label: {
+                        HStack{
+                            VStack(alignment: .leading){
+                                Text(item.itemName)
+                                    .font(.subheadline)
+                                    .bold()
+                                    .lineLimit(1)
+                                Text(item.itemType)
+                                    .font(.footnote)
+                                    .opacity(0.7)
+                                    .lineLimit(1)
+                            }
+                            
+                            Spacer()
+                            
+                            VStack(alignment: .trailing) {
+                                Text("$\(item.fee, specifier: "%.2f")")
+                            }
+                            .fontWeight(.bold)
                         }
-                        
-                        Spacer()
-                        
-                        VStack(alignment: .trailing) {
-                            Text("$\(item.fee, specifier: "%.2f")")
-                        }
-                        .fontWeight(.bold)
                     }
                 }
-                
             }
-            .navigationTitle("Items in *Project*")
+            .navigationTitle("Items in Project")
             .navigationBarTitleDisplayMode(.inline)
         }
+        
         
         
         
