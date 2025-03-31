@@ -5,8 +5,9 @@
 //  Created by Gabe Witcher on 3/27/25.
 //
 
-import Foundation
+import SwiftUI
 import SwiftData
+import SwiftUIFontIcon
 
 @Model
 class Project {
@@ -21,9 +22,10 @@ class Project {
     var dateDelivered: Date
     var paid: Bool
     var dateClosed: Date
-    var items: [Item]?
-    
-    //var mediaType: String
+    @Relationship(deleteRule: .cascade)
+    var items: [Item]
+    var mediaType: MediaType
+    var status: Status
     
     
     init(
@@ -37,8 +39,10 @@ class Project {
         invoiced: Bool = false,
         dateDelivered: Date = Date.distantPast,
         paid: Bool = false,
-        dateClosed: Date = Date.distantPast
-        //mediaType: MediaType.RawValue = MediaType.tv.rawValue
+        dateClosed: Date = Date.distantPast,
+        items: [Item] = [Item](),
+        mediaType: MediaType = MediaType.recording,
+        status: Status = Status.open
     ) {
         self.id = id
         self.client = client
@@ -51,22 +55,40 @@ class Project {
         self.dateDelivered = dateDelivered
         self.paid = paid
         self.dateClosed = dateClosed
-        //self.mediaType = mediaType
+        self.items = items
+        self.mediaType = mediaType
+        self.status = status
+        
     }
   
-    
+    var icon: String {
+        switch mediaType {
+        case .film:
+            ".film"
+        case .tv:
+            ".tv"
+        case .recording:
+            "FontIcon.text(.awesome5Solid(code: .headphones), fontsize: 24, color: Color.green)"
+        case .concert:
+            "FontIcon.text(.awesome5Solid(code: .music), fontsize: 24, color: Color.green)"
+        case .lesson:
+            "FontIcon.text(.awesome5Solid(code: .user-graduate), fontsize: 24, color: Color.green)"
+        case .other:
+            "FontIcon.text(.awesome5Solid(code: .record-vinyl), fontsize: 24, color: Color.green)"
+        }
+    }
     
 }
 
-//enum Status: String, CaseIterable, Identifiable {
-//    case open = "Open"
-//    case invoiced = "Invoiced"
-//    case closed = "Closed"
-//
-//    var id: Self {self}
-//}
+enum Status: String, CaseIterable, Identifiable, Codable {
+    case open = "Open"
+    case invoiced = "Invoiced"
+    case closed = "Closed"
 
-enum MediaType: String, CaseIterable, Identifiable {
+    var id: Self {self}
+}
+
+enum MediaType: String, CaseIterable, Identifiable, Codable {
     case film = "Film"
     case tv = "TV"
     case recording = "Recording"

@@ -32,96 +32,97 @@ struct ProjectDetailView: View {
     
     var body: some View {
         
-        Form {
-            Section("Project Info"){
-                LabeledContent {
-                    TextField("", text: $client)
-                    
-                }   label: {
-                    Text("Client").foregroundStyle(.secondary)
-                }
-                
-                LabeledContent {
-                    TextField("", text: $projectName)
-                }   label: {
-                    Text("Project").foregroundStyle(.secondary)
-                }
-                LabeledContent {
-                    TextField("", text: $artist)
-                }   label: {
-                    Text("Artist").foregroundStyle(.secondary)
-                }
-                
-                DatePicker("Job Date", selection: $jobDate)
-                    .foregroundStyle(.secondary)
-            }
-            .textFieldStyle(.plain)
-            
-            Section {
-                Picker("Media", selection: $mediaType) {
-                    ForEach(MediaType.allCases) {type in
-                        Text(type.rawValue)
+        NavigationStack {
+            Form {
+                Section("Project Info"){
+                    LabeledContent {
+                        TextField("", text: $client)
+                        
+                    }   label: {
+                        Text("Client").foregroundStyle(.secondary)
                     }
                     
-                }
-            }
-            
-            Section {
-                
-                NavigationLink {
-                    ItemListView()
-                } label: {
-                        Text("Items")
-                }
-                HStack {
-                    
-                    Button {
-                        sheetIsPresented = true
-                    } label: {
-                        NavigationStack {
-                            HStack{
-                                Image(systemName: "plus.circle.fill")
-                                Text("Add Items")
-                            }
-                        }
+                    LabeledContent {
+                        TextField("", text: $projectName)
+                    }   label: {
+                        Text("Project").foregroundStyle(.secondary)
                     }
+                    LabeledContent {
+                        TextField("", text: $artist)
+                    }   label: {
+                        Text("Artist").foregroundStyle(.secondary)
+                    }
+                    
+                    DatePicker("Job Date", selection: $jobDate)
+                        .foregroundStyle(.secondary)
                 }
-                .sheet(isPresented: $sheetIsPresented) {
-                    AddItemView()
-                }
-            }
-            
-            
-            Section("Notes") {
-                ScrollView {
-                    TextField("", text: $notes, axis: .vertical)
-                }
-            }
-            .textFieldStyle(.roundedBorder)
-            
-            Section {
-                Toggle(isOn: $invoiced) {
-                    if !invoiced {
-                        Text("Invoiced")
-                    } else {
-                        HStack{
-                            Text("Invoiced")
-                            DatePicker("", selection: $dateDelivered, displayedComponents: [.date])
-                                .datePickerStyle(.automatic)
-                                .padding(.horizontal)
+                .textFieldStyle(.plain)
+                
+                Section {
+                    Picker("Media", selection: $mediaType) {
+                        ForEach(MediaType.allCases) {type in
+                            Text(type.rawValue)
                         }
                         
                     }
                 }
-                Toggle(isOn: $paid) {
-                    if !paid {
-                        Text("Paid")
-                    } else {
-                        HStack{
+                
+                Section {
+                    NavigationLink {
+                        ItemListView(project: project)
+                    } label: {
+                        Text("Items: \(project.items.count)")
+                    }
+                    HStack {
+                        
+                        Button {
+                            sheetIsPresented = true
+                        } label: {
+                            NavigationStack {
+                                HStack{
+                                    Image(systemName: "plus.circle.fill")
+                                    Text("Add Items")
+                                }
+                            }
+                        }
+                    }
+                    .sheet(isPresented: $sheetIsPresented) {
+                        ItemDetailView(project: project)
+                    }
+                }
+                
+                
+                Section("Notes") {
+                    ScrollView {
+                        TextField("", text: $notes, axis: .vertical)
+                    }
+                }
+                .textFieldStyle(.plain)
+                
+                Section {
+                    Toggle(isOn: $invoiced) {
+                        if !invoiced {
+                            Text("Invoiced")
+                        } else {
+                            HStack{
+                                Text("Invoiced")
+                                DatePicker("", selection: $dateDelivered, displayedComponents: [.date])
+                                    .datePickerStyle(.automatic)
+                                    .padding(.horizontal)
+                            }
+                            
+                        }
+                    }
+                    Toggle(isOn: $paid) {
+                        if !paid {
                             Text("Paid")
-                            DatePicker("", selection: $dateClosed, displayedComponents: [.date])
-                                .datePickerStyle(.automatic)
-                                .padding(.horizontal)
+                        } else {
+                            HStack{
+                                Text("Paid")
+                                DatePicker("", selection: $dateClosed, displayedComponents: [.date])
+                                    .datePickerStyle(.automatic)
+                                    .padding(.horizontal)
+                            }
                         }
                     }
                 }
@@ -133,7 +134,7 @@ struct ProjectDetailView: View {
             projectName = project.projectName
             jobDate = project.jobDate
             notes = project.notes
-            //mediaType = project.mediaType
+            mediaType = project.mediaType
             invoiced = project.invoiced
             paid = project.paid
             dateDelivered = project.dateDelivered
@@ -156,11 +157,12 @@ struct ProjectDetailView: View {
                     project.projectName = projectName
                     project.jobDate = jobDate
                     project.notes = notes
-                    //project.mediaType = mediaType.rawValue
+                    project.mediaType = mediaType
                     project.invoiced = invoiced
                     project.paid = paid
                     project.dateDelivered = dateDelivered
                     project.dateClosed = dateClosed
+                    
                     modelContext.insert(project)
                     guard let _ = try? modelContext.save() else{
                         print("😡 ERROR: Cannot save")

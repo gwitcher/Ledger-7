@@ -22,21 +22,26 @@ struct ProjectLedgerView: View {
         
         VStack{
             NavigationStack {
-                List {
-                    ForEach(projects) {project in
-                        NavigationLink(destination: ProjectDetailView(project: project)) {
-                            ProjectEntryView(project: project)
-                        }
-                        .swipeActions {
-                            Button("Delete", role: .destructive) {
-                                modelContext.delete(project)
+                Group {
+                    if projects.isEmpty {
+                        ContentUnavailableView("Enter your first project", systemImage: "music.note.list" )
+                    
+                    } else {
+                        List {
+                            ForEach(projects) {project in
+                                NavigationLink(destination: ProjectDetailView(project: project)) {
+                                    ProjectEntryView(project: project)
+                                }
+                                .swipeActions {
+                                    Button("Delete", role: .destructive) {
+                                        modelContext.delete(project)
+                                    }
+                                }
                             }
+                            
                         }
                     }
-                    
                 }
-                
-                
                 .navigationTitle("Projects")
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
