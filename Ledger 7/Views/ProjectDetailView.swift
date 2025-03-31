@@ -87,7 +87,7 @@ struct ProjectDetailView: View {
                         }
                     }
                     .sheet(isPresented: $sheetIsPresented) {
-                        ItemDetailView(project: project)
+                        AddItemView(project: project)
                     }
                 }
                 

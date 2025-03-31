@@ -71,6 +71,8 @@ struct ItemDetailView: View {
             .navigationBarBackButtonHidden()
             .frame(height: 220)
             
+            Spacer()
+            
             Button {
                 
                 let newItem = Item(itemName: itemName, itemType: itemType, fee: fee ?? 0.00)

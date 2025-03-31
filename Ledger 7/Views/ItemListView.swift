@@ -28,19 +28,20 @@ struct ItemListView: View {
                 } else {
                     List {
                         ForEach(project.items) { item in
-                            Text(item.itemName)
+                            NavigationLink {
+                                ItemDetailView(project: project)
+                            } label: {
+                                ItemEntryView(item: item)
+                            }
                         }
-                            
-                        }
-                        
                     }
-                    
                 }
-                    .navigationTitle("Items in Project")
-                    .navigationBarTitleDisplayMode(.inline)
             }
+            .navigationTitle("Items in Project")
+            .navigationBarTitleDisplayMode(.inline)
         }
     }
+}
 
 
 #Preview {
