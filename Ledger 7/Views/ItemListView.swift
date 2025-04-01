@@ -14,11 +14,11 @@ struct ItemListView: View {
     
     var project : Project
     
-    @State var sampleItems: [Item] = [
-        Item(itemName: "Goldrush", itemType: .arrangement, fee: 200.00),
-        Item(itemName: "Chicken Sisters Ep 3", itemType: .overdub, fee: 15000.00),
-        Item(itemName: "Martha My Dead", itemType: .session, fee: 500.00)
-    ]
+    @State private var sheetIsPresented = false
+    @State var selectedItem: Item?
+    @State var itemName = ""
+    @State var itemType = ItemType.arrangement
+    @State var fee = Double("")
     
     var body: some View {
         NavigationStack{
@@ -28,23 +28,58 @@ struct ItemListView: View {
                 } else {
                     List {
                         ForEach(project.items) { item in
-                            NavigationLink {
-                                ItemDetailView(project: project)
-                            } label: {
+                            VStack{
                                 ItemEntryView(item: item)
                             }
+                            .contentShape(Rectangle())
+                            .onTapGesture {
+                                selectedItem = item
+                                sheetIsPresented = true
+                                
+                            }
                         }
+                        .swipeActions {
+                            Button("Delete", role: .destructive) {
+                                modelContext.delete(project)
+                            }
+                        }
+                        
                     }
+                    
                 }
             }
-            .navigationTitle("Items in Project")
+            .navigationTitle("Items in \(project.projectName)")
             .navigationBarTitleDisplayMode(.inline)
+            .sheet(isPresented: $sheetIsPresented) {
+                ItemEditView(item: selectedItem ?? Item(itemName: "No Item"))
+            }
         }
     }
 }
 
 
 #Preview {
-    ItemListView(project: Project(client: "Hi Brah"))
-        .modelContainer(for: Project.self, inMemory: true)
+    ItemListView(project: Project(client: "Hi Brah", items: [
+        Item(
+            itemName: "Jaws",
+            itemType: .arrangement,
+            fee: 3000.00
+        ),
+        Item(
+            itemName: "Imperial March",
+            itemType: .arrangement,
+            fee: 3000.00
+        ),
+        Item(
+            itemName: "Hedwigs Theme",
+            itemType: .score,
+            fee: 3000.00
+        ),
+        Item(
+            itemName: "Raiders March",
+            itemType: .score,
+            fee: 3000.00
+        ),
+    ]))
+    .modelContainer(for: Project.self, inMemory: true)
 }

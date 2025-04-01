@@ -1,18 +1,19 @@
 //
-//  ItemDetailView.swift
+//  ItemEditView.swift
 //  Ledger 7
 //
-//  Created by Gabe Witcher on 3/27/25.
+//  Created by Gabe Witcher on 3/31/25.
 //
 
 import SwiftUI
 import SwiftData
+import SwiftUIFontIcon
 
-struct ItemDetailView: View {
+struct ItemEditView: View {
     @Environment(\.modelContext) var modelContext
     @Environment(\.dismiss) var dismiss
     
-    var project: Project
+    var item: Item
     
     @State var itemName = ""
     @State var itemType = ItemType.arrangement
@@ -70,28 +71,14 @@ struct ItemDetailView: View {
             .shadow(color: Color.primary.opacity(0.2), radius: 10, x: 0, y: 5)
             .navigationBarBackButtonHidden()
             .frame(height: 220)
+            .onAppear {
+                itemName = item.itemName
+                itemType = item.itemType
+                fee = item.fee
+            }
             
             Spacer()
             
-            Button {
-                
-                let newItem = Item(itemName: itemName, itemType: itemType, fee: fee ?? 0.00)
-                
-                itemName = ""
-                itemType = ItemType.session
-                fee = nil
-                
-                project.items.append(newItem)
-                guard let _ = try? modelContext.save() else{
-                    print("😡 ERROR: Cannot save")
-                    return
-                }
-            } label: {
-                Image(systemName: "plus.circle")
-                Text("Add Item")
-            }
-            .buttonStyle(.borderedProminent)
-            .disabled(itemName.isEmpty)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Button {
@@ -104,10 +91,14 @@ struct ItemDetailView: View {
                 
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
+                        item.itemName = itemName
+                        item.itemType = itemType
+                        item.fee = fee ?? 0.0
                         dismiss()
                     } label: {
                         Text("Done")
                     }
+                    
                 }
             }
             
@@ -122,9 +113,8 @@ struct ItemDetailView: View {
 
 
 
+
 #Preview {
-    NavigationStack {
-        ItemDetailView(project: Project())
-            .modelContainer(for: Project.self, inMemory: true)
-    }
+    ItemEditView(item: Item())
+        .modelContainer(for: Project.self, inMemory: true)
 }

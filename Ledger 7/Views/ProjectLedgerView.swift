@@ -25,7 +25,7 @@ struct ProjectLedgerView: View {
                 Group {
                     if projects.isEmpty {
                         ContentUnavailableView("Enter your first project", systemImage: "music.note.list" )
-                    
+                        
                     } else {
                         List {
                             ForEach(projects) {project in
@@ -68,9 +68,6 @@ struct ProjectLedgerView: View {
 
 
 #Preview {
-    NavigationStack{
-        ProjectLedgerView()
-            .modelContainer(for: Project.self, inMemory: true)
-    }
-    
+    ProjectLedgerView()
+        .modelContainer(for: Project.self, inMemory: true)
 }

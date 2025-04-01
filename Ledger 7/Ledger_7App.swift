@@ -6,17 +6,29 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct Ledger_7App: App {
-    var body: some Scene {
+    let container: ModelContainer
+    
+    var body: some Scene {	
         WindowGroup {
             ProjectLedgerView()
-                .modelContainer(for: Project.self)
+//                .modelContainer(for: Project.self)
         }
+        .modelContainer(container)
     }
     
     init() {
+        let schema = Schema([Project.self])
+        let config  = ModelConfiguration("MyLedger", schema: schema)
+        do{
+            container = try ModelContainer(for: schema, configurations: config)
+        } catch {
+            fatalError("Could not configure the container")
+        }
+        
         print(URL.applicationSupportDirectory.path(percentEncoded: false))
     }
 }
